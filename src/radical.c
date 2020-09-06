@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-#include <string.h>
+//#include <string.h>
 #include "radical.h"
 #include "fraction.h"
 
@@ -51,19 +51,12 @@ Radical mulRad(Radical a, Radical b){
 	res.out = mulFrac(a.out, res.out);
 	return res;
 }
-char* addRad(char* a, Radical b){
-	int alen = strlen(a);
-	int count = 0;
-	for (int i = 0; i < len; i++){
-		if ((a[i] == '+' || a[i] == '-') && a[i+1] == ' '){
-			count++;
-		}
-	}
-	Radical* array = (Radical*)calloc(count, sizeof(Radical));
-	int i = 0;
-	while (i < alen){
-		
-	sscanf(a, "%c%d%d%d", )
+Ploynomial addRad(Ploynomial a, Radical b){
+	Ploynomial front, rear, tmp;
+	rear = (Ploynomial)malloc(sizeof(Node));
+	front = rear;
+	while (a){
+		if (a->)
 	}
 }
 //Raddivint()

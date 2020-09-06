@@ -11,4 +11,11 @@ typedef struct {
 	int in;
 } Radical;
 
+struct Node {
+	Radical num;
+	struct Node* next;
+};
+typedef struct Node Node;
+typedef Node* Ploynomial;
+
 #endif
