@@ -1,2 +1,0 @@
-del /S *.o
-@pause
