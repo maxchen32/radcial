@@ -55,8 +55,20 @@ Ploynomial addRad(Ploynomial a, Radical b){
 	Ploynomial front, rear, tmp;
 	rear = (Ploynomial)malloc(sizeof(Node));
 	front = rear;
-	while (a){
-		if (a->)
+	while (a != NULL){
+		if (a->num.in == b.in){
+			rear->num.out = addFrac(a->num.out, b.out);
+			rear->num.in = a->num.in;			
+		} else {
+			rear = a;
+		}
+		a = a->next;
+		if (a != NULL){
+			rear->next = (Ploynomial)malloc(sizeof(Node));
+			rear = rear->next;
+		}
 	}
+	rear->next = NULL;
+	return front;
 }
 //Raddivint()

@@ -7,5 +7,6 @@ Radical inttoRad( int radicand );
 
 Radical divRad(Radical a, Radical b);
 Radical mulRad(Radical a, Radical b);
+Ploynomial addRad(Ploynomial a, Radical b);
 
 #endif
