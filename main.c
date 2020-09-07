@@ -6,7 +6,9 @@
 int main(int argc , char * argv[]) {
 	//Radical aaa={{1,1},2}, bbb={{1,3},3}, ccc={{1,1},6};
 	//printRad(mulRad(mulRad(aaa, bbb),ccc),"");
-	Polynomial test;
-	test = (Polynomial)
+	Fraction aaa = {998,999}, bbb = {8,9};
+	int cmp;
+    cmp = cmpFrac(aaa, bbb);
+    printf("%d\n", cmp);
 	return 0;
 }

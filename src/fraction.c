@@ -42,7 +42,7 @@ void fixsignFrac(Fraction* a){
 	if (0 == a->up){
 		a->down = 1;
 		return;
-	}	
+	}
 	if (a->down < 0){
 		a->up = -(a->up);
 		a->down = -(a->down);
@@ -58,9 +58,18 @@ void reduceFrac(Fraction* a){
 void printFrac(Fraction a, char* end){
 	printf("(%d/%d)%s", a.up, a.down, end);
 }
-int compareFrac(Fraction a, Fraction b){
-	if ((a.up == b.up) && ())
+int cmpFrac(Fraction a, Fraction b){
+	if ((a.up == b.up) && (a.down == b.down))
+		return 0;
+	int lcmn = lcm(a.down, b.down);
+    a.up = lcmn / a.down * a.up;
+    b.up = lcmn / b.down * b.up;
+    if (a.up < b.up)
+        return -1;
+    else if (a.up > b.up)
+        return 1;
 }
+
 //calculation
 Fraction addFrac(Fraction a, Fraction b){
 	int lcmn = lcm(a.down, b.down);
@@ -87,7 +96,7 @@ Fraction mulFrac(Fraction a, Fraction b){
 }
 Fraction divFrac(Fraction a, Fraction b){
 	b.up ^= b.down ^= b.up ^= b.down;
-	return mulFrac(a, b);	
+	return mulFrac(a, b);
 }
 Fraction powFrac(Fraction a, int expt){
 	a.up = qpow(a.up, expt);

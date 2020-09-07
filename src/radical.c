@@ -32,7 +32,9 @@ Radical inttoRad( int radicand ){
 	}
 	return res;
 }
-int compareRad(Radical a, Radical b){
+int cmpRad(Radical a, Radical b){
+    if (cmpFrac(a.out, b.out) == 0 && a.in == b.in)
+        return 0;
 
 }
 
@@ -63,7 +65,7 @@ Polynomial addRad(Polynomial a, Radical b){
 	while (a != NULL){
 		if (a->num.in == b.in){
 			rear->num.out = addFrac(a->num.out, b.out);
-			rear->num.in = a->num.in;			
+			rear->num.in = a->num.in;
 		} else {
 			rear = a;
 		}
@@ -100,9 +102,11 @@ Polynomial findkthPloy(int k, Polynomial ptrl){
 	else
 		return NULL;
 }
+/*
 Polynomial findPloy(Radical x, Polynomial ptrl){
     Polynomial p = ptrl;
     while (p != NULL && p->num){
 
     }
 }
+*/

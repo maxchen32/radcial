@@ -5,6 +5,7 @@
 //tool
 void printRad(Radical a, char* end);
 Radical inttoRad( int radicand );
+int cmpRad(Radical a, Radical b);
 
 //calculation
 Radical divRad(Radical a, Radical b);
