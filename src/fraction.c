@@ -8,6 +8,7 @@
 	exit(1);\
 }
 
+//math
 int gcd(int a, int b){
 	if (0 == a || 0 == b){
 		return 1;
@@ -33,6 +34,7 @@ int qpow(int base, int expt){
 	return res;
 }
 
+//tool
 void fixsignFrac(Fraction* a){
 	if (0 == a->down){
 		serious_error;
@@ -56,8 +58,10 @@ void reduceFrac(Fraction* a){
 void printFrac(Fraction a, char* end){
 	printf("(%d/%d)%s", a.up, a.down, end);
 }
-
-
+int compareFrac(Fraction a, Fraction b){
+	if ((a.up == b.up) && ())
+}
+//calculation
 Fraction addFrac(Fraction a, Fraction b){
 	int lcmn = lcm(a.down, b.down);
 	a.up = lcmn / a.down * a.up + lcmn / b.down * b.up;

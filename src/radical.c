@@ -5,6 +5,7 @@
 #include "radical.h"
 #include "fraction.h"
 
+//tool
 void printRad(Radical a, char* end){
 	printf("(%d/%d)*sqrt(%d)%s", a.out.up, a.out.down, a.in, end);
 }
@@ -31,7 +32,11 @@ Radical inttoRad( int radicand ){
 	}
 	return res;
 }
+int compareRad(Radical a, Radical b){
 
+}
+
+//calculation
 Radical divRad(Radical a, Radical b){
 	Fraction tmp = divFrac(a.out, b.out);
 	int gcdn = gcd(a.in, b.in);
@@ -51,9 +56,9 @@ Radical mulRad(Radical a, Radical b){
 	res.out = mulFrac(a.out, res.out);
 	return res;
 }
-Ploynomial addRad(Ploynomial a, Radical b){
-	Ploynomial front, rear, tmp;
-	rear = (Ploynomial)malloc(sizeof(Node));
+Polynomial addRad(Polynomial a, Radical b){
+	Polynomial front, rear, tmp;
+	rear = (Polynomial)malloc(sizeof(Node));
 	front = rear;
 	while (a != NULL){
 		if (a->num.in == b.in){
@@ -64,7 +69,7 @@ Ploynomial addRad(Ploynomial a, Radical b){
 		}
 		a = a->next;
 		if (a != NULL){
-			rear->next = (Ploynomial)malloc(sizeof(Node));
+			rear->next = (Polynomial)malloc(sizeof(Node));
 			rear = rear->next;
 		}
 	}
@@ -72,3 +77,32 @@ Ploynomial addRad(Ploynomial a, Radical b){
 	return front;
 }
 //Raddivint()
+
+//list
+int lenPoly(Polynomial ptrl){
+	Polynomial p = ptrl;
+	int j = 0;
+	while (p){
+		p = p->next;
+		j++;
+	}
+	return j;
+}
+Polynomial findkthPloy(int k, Polynomial ptrl){
+	Polynomial p = ptrl;
+	int i = 1;
+	while ( p != NULL && i < k){
+		p = p->next;
+		i++;
+	}
+	if (i==k)
+		return p;
+	else
+		return NULL;
+}
+Polynomial findPloy(Radical x, Polynomial ptrl){
+    Polynomial p = ptrl;
+    while (p != NULL && p->num){
+
+    }
+}

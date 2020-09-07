@@ -16,6 +16,6 @@ struct Node {
 	struct Node* next;
 };
 typedef struct Node Node;
-typedef Node* Ploynomial;
+typedef Node* Polynomial;
 
 #endif

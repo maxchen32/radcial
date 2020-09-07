@@ -11,6 +11,7 @@ int qpow(int base, int expt);				//快速幂
 void fixsignFrac(Fraction* a);				//符号修正、错误处理
 void reduceFrac(Fraction *a);				//约分
 void printFrac(Fraction a, char* end);      //打印
+int compareFrac(Fraction a, Fraction b);
 
 //运算
 Fraction addFrac(Fraction a, Fraction b);	//加法
