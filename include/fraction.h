@@ -9,7 +9,8 @@ int qpow(int base, int expt);				//快速幂
 
 //工具
 void fixsignFrac(Fraction* a);				//符号修正、错误处理
-void reduceFrac(Fraction *a);				//约分
+void reduceFrac(Fraction* a);				//分数约分
+void reduce(int* a, int* b);              //数约分
 void printFrac(Fraction a, char* end);    //打印
 int cmpFrac(Fraction a, Fraction b);       //比较 返回-1 , 0 , 1
 

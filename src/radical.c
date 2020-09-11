@@ -33,7 +33,7 @@ Radical inttoRad( int radicand ){
 	return res;
 }
 int cmpRad(Radical a, Radical b){
-    if (cmpFrac(a.out, b.out) == 0 && a.in == b.in)
+    if (a.in == b.in && cmpFrac(a.out, b.out) == 0)
         return 0;
 
     int gcdn1 = gcd(a.out.up, b.out.up);
@@ -46,7 +46,7 @@ int cmpRad(Radical a, Radical b){
     a.out.up *= b.out.down;
     a.out.down *= b.out.up;
     b.out.up = a.out.down;
-    b.out.down = a.out.down;
+    b.out.down = a.out.up;
 
     int gcdn3 = gcd(a.in, a.out.down);
     int gcdn4 = gcd(b.in, b.out.down);

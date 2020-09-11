@@ -55,18 +55,28 @@ void reduceFrac(Fraction* a){
 	a->up /= gcdn;
 	a->down /= gcdn;
 }
+void reduce(int* a, int* b){
+    int gcdn = gcd(*a, *b);
+    *a /= gcdn;
+    *b /= gcdn;
+}
 void printFrac(Fraction a, char* end){
 	printf("(%d/%d)%s", a.up, a.down, end);
 }
 int cmpFrac(Fraction a, Fraction b){
-	if ((a.up == b.up) && (a.down == b.down))
+	if ((a.up == b.up && a.down == b.down) || (a.up == 0 && b.up == 0))
 		return 0;
-	int lcmn = lcm(a.down, b.down);
-    a.up = lcmn / a.down * a.up;
-    b.up = lcmn / b.down * b.up;
-    if (a.up < b.up)
+    else if (a.up < 0 && b.up > 0)
         return -1;
-    else if (a.up > b.up)
+    else if (a.up > 0 && b.up < 0)
+        return 1;
+    reduce(&a.up, &b.up);
+    reduce(&a.down, &b.down);
+    long long resup = a.up * b.down;
+    long long resdown = a.down * b.up;
+    if (resup < resdown)
+        return -1;
+    else if (resup > resdown)
         return 1;
 }
 
