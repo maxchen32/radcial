@@ -33,8 +33,14 @@ Radical inttoRad( int radicand ){
 	return res;
 }
 int cmpRad(Radical a, Radical b){
-    if (a.in == b.in && cmpFrac(a.out, b.out) == 0)
+    if (a.in == b.in && a.out.up == b.out.up && a.out.down == b.out.down)
         return 0;
+    else
+        return -1;
+/*
+int cmpRad(Radical a, Radical b){
+    if (a.in == b.in)
+        return cmpFrac(a.out, b.out);
 
     int gcdn1 = gcd(a.out.up, b.out.up);
     int gcdn2 = gcd(a.out.down, b.out.down);
@@ -42,24 +48,30 @@ int cmpRad(Radical a, Radical b){
     b.out.up /= gcdn1;
     a.out.down /= gcdn2;
     b.out.down /= gcdn2;
-
+*
     a.out.up *= b.out.down;
     a.out.down *= b.out.up;
     b.out.up = a.out.down;
     b.out.down = a.out.up;
+*
+    long long  aup = a.out.up * b.out.down,
+                adown = a.out.dowm * b.out.up,
+                bup = a.out.down,
+                bdown = a.out.up;
 
-    int gcdn3 = gcd(a.in, a.out.down);
-    int gcdn4 = gcd(b.in, b.out.down);
+    int gcdn3 = (int)lgcd((long long)a.in, adown);
+    int gcdn4 = (int)lgcd((long long)b.in, bdown);
     a.in /= gcdn3;
-    a.out.down /= gcdn3;
+    adown /= gcdn3;
     b.in /= gcdn4;
-    b.out.down /= gcdn4;
+    bdown /= gcdn4;
 
-    a.out.up *= a.in;
-    b.out.up *= b.in;
+    aup *= a.in;
+    bup *= b.in;
     printRad(a , "\n");
     printRad(b , "\n");
     return cmpFrac(a.out, b.out);
+*/
 }
 
 //calculation
@@ -83,7 +95,7 @@ Radical mulRad(Radical a, Radical b){
 	return res;
 }
 Polynomial addRad(Polynomial a, Radical b){
-	Polynomial front, rear, tmp;
+	Polynomial front, rear;
 	rear = (Polynomial)malloc(sizeof(Node));
 	front = rear;
 	while (a != NULL){
@@ -114,6 +126,7 @@ int lenPoly(Polynomial ptrl){
 	}
 	return j;
 }
+
 Polynomial findkthPloy(int k, Polynomial ptrl){
 	Polynomial p = ptrl;
 	int i = 1;

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 #include "fraction.h"
 #include "radical.h"
 
@@ -14,6 +15,17 @@ int gcd(int a, int b){
 		return 1;
 	}
 	int tmp;
+	while (tmp = a % b){
+		a = b;
+		b = tmp;
+	}
+	return b > 0 ? b : -b;
+}
+long long lgcd(long long a, long long b){
+	if (0 == a || 0 == b){
+		return 1;
+	}
+	long long tmp;
 	while (tmp = a % b){
 		a = b;
 		b = tmp;
@@ -64,6 +76,9 @@ void printFrac(Fraction a, char* end){
 	printf("(%d/%d)%s", a.up, a.down, end);
 }
 int cmpFrac(Fraction a, Fraction b){
+    if (b.down == 0){
+        return 2;
+    }
 	if ((a.up == b.up && a.down == b.down) || (a.up == 0 && b.up == 0))
 		return 0;
     else if (a.up < 0 && b.up > 0)
@@ -78,6 +93,55 @@ int cmpFrac(Fraction a, Fraction b){
         return -1;
     else if (resup > resdown)
         return 1;
+}
+int humanerr(Fraction a){
+    if (a.down == 0){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+Fraction c(char myope, ...){
+    va_list alist;
+    va_start(alist, myope);
+    Fraction argval = va_arg(alist, Fraction);
+    Fraction res = argval;
+    switch (myope){
+    case '+' :
+        argval = va_arg(alist, Fraction);
+        while (!humanerr(argval)){
+            res = addFrac(res, argval);
+            argval = va_arg(alist, Fraction);
+        }
+        break;
+    case '-' :
+        argval = va_arg(alist, Fraction);
+        while (!humanerr(argval)){
+            res = subFrac(res, argval);
+            argval = va_arg(alist, Fraction);
+        }
+        break;
+    case '*' :
+        argval = va_arg(alist, Fraction);
+        while (!humanerr(argval)){
+            res = mulFrac(res, argval);
+            argval = va_arg(alist, Fraction);
+        }
+        break;
+    case '/' :
+        argval = va_arg(alist, Fraction);
+        while (!humanerr(argval)){
+            res = divFrac(res, argval);
+            argval = va_arg(alist, Fraction);
+        }
+        break;
+    default:
+        fprintf(stderr,"calc: Invalid Operator\n");
+        exit(1);
+    }
+    va_end(alist);
+    return res;
 }
 
 //calculation
