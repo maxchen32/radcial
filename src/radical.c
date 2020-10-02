@@ -32,11 +32,12 @@ Radical inttoRad( int radicand ){
 	}
 	return res;
 }
-int cmpRad(Radical a, Radical b){
+int isequalRad(Radical a, Radical b){
     if (a.in == b.in && a.out.up == b.out.up && a.out.down == b.out.down)
-        return 0;
+        return 1;
     else
-        return -1;
+        return 0;
+}
 /*
 int cmpRad(Radical a, Radical b){
     if (a.in == b.in)
@@ -71,8 +72,7 @@ int cmpRad(Radical a, Radical b){
     printRad(a , "\n");
     printRad(b , "\n");
     return cmpFrac(a.out, b.out);
-*/
-}
+}*/
 
 //calculation
 Radical divRad(Radical a, Radical b){

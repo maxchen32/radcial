@@ -15,7 +15,7 @@ int gcd(int a, int b){
 		return 1;
 	}
 	int tmp;
-	while (tmp = a % b){
+	while ((tmp = a % b)){
 		a = b;
 		b = tmp;
 	}
@@ -26,7 +26,7 @@ long long lgcd(long long a, long long b){
 		return 1;
 	}
 	long long tmp;
-	while (tmp = a % b){
+	while ((tmp = a % b)){
 		a = b;
 		b = tmp;
 	}
@@ -47,6 +47,12 @@ int qpow(int base, int expt){
 }
 
 //tool
+Fraction initFrac(int up, int down){
+    Fraction res = {up , down};
+    if (down != 0)
+        reduceFrac(&res);
+    return res;
+}
 void fixsignFrac(Fraction* a){
 	if (0 == a->down){
 		serious_error;
@@ -107,30 +113,27 @@ Fraction c(char myope, ...){
     va_start(alist, myope);
     Fraction argval = va_arg(alist, Fraction);
     Fraction res = argval;
+    argval = va_arg(alist, Fraction);
     switch (myope){
     case '+' :
-        argval = va_arg(alist, Fraction);
         while (!humanerr(argval)){
             res = addFrac(res, argval);
             argval = va_arg(alist, Fraction);
         }
         break;
     case '-' :
-        argval = va_arg(alist, Fraction);
         while (!humanerr(argval)){
             res = subFrac(res, argval);
             argval = va_arg(alist, Fraction);
         }
         break;
     case '*' :
-        argval = va_arg(alist, Fraction);
         while (!humanerr(argval)){
             res = mulFrac(res, argval);
             argval = va_arg(alist, Fraction);
         }
         break;
     case '/' :
-        argval = va_arg(alist, Fraction);
         while (!humanerr(argval)){
             res = divFrac(res, argval);
             argval = va_arg(alist, Fraction);
