@@ -60,3 +60,4 @@ dkms.conf
 obj/
 bin/
 push.py
+data.txt
