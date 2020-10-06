@@ -6,6 +6,12 @@
 #include "fraction.h"
 
 //tool
+Radical initRad(int up, int down, int in){
+    Radical res = {{ up , down }, in};
+    if (down != 0)
+        reduceFrac(&(res.out));
+    return res;
+}
 void printRad(Radical a, char* end){
 	printf("(%d/%d)*sqrt(%d)%s", a.out.up, a.out.down, a.in, end);
 }
@@ -49,16 +55,16 @@ int cmpRad(Radical a, Radical b){
     b.out.up /= gcdn1;
     a.out.down /= gcdn2;
     b.out.down /= gcdn2;
-*
+
     a.out.up *= b.out.down;
     a.out.down *= b.out.up;
     b.out.up = a.out.down;
     b.out.down = a.out.up;
-*
-    long long  aup = a.out.up * b.out.down,
-                adown = a.out.dowm * b.out.up,
-                bup = a.out.down,
-                bdown = a.out.up;
+
+    long long   aup = a.out.up * b.out.down ,
+                adown = a.out.dowm * b.out.up ,
+                bup = a.out.down ,
+                bdown = a.out.up ;
 
     int gcdn3 = (int)lgcd((long long)a.in, adown);
     int gcdn4 = (int)lgcd((long long)b.in, bdown);
@@ -72,8 +78,8 @@ int cmpRad(Radical a, Radical b){
     printRad(a , "\n");
     printRad(b , "\n");
     return cmpFrac(a.out, b.out);
-}*/
-
+}
+*/
 //calculation
 Radical divRad(Radical a, Radical b){
 	Fraction tmp = divFrac(a.out, b.out);
@@ -139,11 +145,63 @@ Polynomial findkthPloy(int k, Polynomial ptrl){
 	else
 		return NULL;
 }
-/*
+
 Polynomial findPloy(Radical x, Polynomial ptrl){
     Polynomial p = ptrl;
-    while (p != NULL && p->num){
+    while (p != NULL && isequalRad(p->num, x)){
+        p = p->next;
+    }
+    return p;
+}
 
+Polynomial insertPoly(Radical x,int i, Polynomial ptrl ){
+    Polynomial p,s;
+    if (i == 1){
+        s = (Polynomial)malloc(sizeof(Node));
+        s->num = x;
+        s->next = ptrl;
+        return s;
+    }
+    p = findkthPloy(i-1, ptrl);
+    if (p == NULL){
+        fprintf(stderr, "insertPloy: type of i error\n");
+        return NULL;
+    }
+    else {
+        s = (Polynomial)malloc(sizeof(Node));
+        s->num = x;
+        s->next = p->next;
+        p->next = s;
+        return ptrl;
     }
 }
-*/
+
+Polynomial deletePoly(int i, Polynomial ptrl){
+    Polynomial p,s;
+    if (i == 1){
+        s = ptrl;
+        if (ptrl != NULL)
+            ptrl = ptrl->next;
+        else
+            return NULL;
+        free(s);
+        s = NULL;
+        return ptrl;
+    }
+    p = findkthPloy(i-1, ptrl);
+    if (p == NULL){
+        fprintf(stderr, "deletePoly: the %dth node does not exist\n",i-1);
+        return NULL;
+    }
+    else if (p->next == NULL){
+        fprintf(stderr, "deletePoly: the %dth node does not exist\n",i);
+        return NULL;
+    }
+    else {
+        s = p->next;
+        p->next = s->next;
+        free(s);
+        s = NULL;
+        return ptrl;
+    }
+}

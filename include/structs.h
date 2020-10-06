@@ -11,11 +11,11 @@ typedef struct {
 	int in;
 } Radical;
 
-struct Node {
-	Radical num;
-	struct Node* next;
-};
 typedef struct Node Node;
 typedef Node* Polynomial;
+struct Node {
+	Radical num;
+	Polynomial next;
+};
 
 #endif
