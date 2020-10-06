@@ -13,6 +13,7 @@ int isequalRad(Radical a, Radical b);
 Radical divRad(Radical a, Radical b);
 Radical mulRad(Radical a, Radical b);
 Polynomial addRad(Polynomial a, Radical b);
+
 Polynomial findPloy(Radical x, Polynomial ptrl);
 Polynomial findkthPloy(int k, Polynomial ptrl);
 Polynomial insertPoly(Radical x,int i, Polynomial ptrl );

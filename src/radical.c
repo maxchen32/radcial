@@ -38,6 +38,11 @@ Radical inttoRad( int radicand ){
 	}
 	return res;
 }
+void printPoly(Polynomial ptrl){
+    Polynomial p = ptrl;
+    while(p != NULL){
+    }
+}
 int isequalRad(Radical a, Radical b){
     if (a.in == b.in && a.out.up == b.out.up && a.out.down == b.out.down)
         return 1;
@@ -100,6 +105,7 @@ Radical mulRad(Radical a, Radical b){
 	res.out = mulFrac(a.out, res.out);
 	return res;
 }
+/*
 Polynomial addRad(Polynomial a, Radical b){
 	Polynomial front, rear;
 	rear = (Polynomial)malloc(sizeof(Node));
@@ -119,6 +125,20 @@ Polynomial addRad(Polynomial a, Radical b){
 	}
 	rear->next = NULL;
 	return front;
+}*/
+Polynomial addRad(Polynomial ptrl, Radical b) {
+    Polynomial p = ptrl;
+    int flag = 0;
+    while (p != NULL){
+        if (p->num.in == b.in){
+            p->num.out = addFrac(p->num.out, b.out);
+            flag = 1; break;
+        }
+    }
+    if (!flag) {
+        insertPoly( b , 1 , ptrl );
+    }
+    return ptrl;
 }
 //Raddivint()
 

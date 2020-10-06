@@ -12,6 +12,6 @@ int main(int argc , char * argv[]) {
     Radical a[10];
     a[0]=initRad(2,1,3);
     Polynomial list;
-    list = insertPoly(a[0],1,list);
+    list = addRad(a[0],list);
 	return 0;
 }
