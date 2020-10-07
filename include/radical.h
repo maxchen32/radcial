@@ -13,8 +13,9 @@ int isequalRad(Radical a, Radical b);
 //calculation
 Radical divRad(Radical a, Radical b);
 Radical mulRad(Radical a, Radical b);
-Polynomial addRad(Polynomial a, Radical b);
-Polynomial subRad(Polynomial a, Radical b);
+Polynomial addRad(Polynomial ptrl, Radical b);
+Polynomial subRad(Polynomial ptrl, Radical b);
+int gcdPoly(Polynomial ptrl);
 
 //list
 Polynomial initPoly();
