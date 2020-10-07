@@ -6,9 +6,12 @@
 
 //tool
 Radical initRad(int up, int down, int in){
-    Radical res = {{ up , down }, in};
-    if (down != 0)
-        reduceFrac(&(res.out));
+    Radical tmp = {{ up , down }, in};
+    if (down != 0){
+        reduceFrac(&(tmp.out));
+    }
+    Radical res = inttoRad( tmp.in );
+    res.out = mulFrac(res.out, tmp.out);
     return res;
 }
 void printRad(Radical a, char* end){
@@ -126,25 +129,7 @@ Polynomial addRad(Polynomial ptrl, Radical b) {
         insertPoly( b ,1 , ptrl );
         return ptrl;
     }
-/*
-    p = p->next;
-    int flag = 0;
-    int i = 1;
-    while (1){
-        if (p->num.in == b.in){
-            p->num.out = addFrac(p->num.out, b.out);
-            flag = 1;
-            if (p->num.out.up == 0){
-                deletePoly(i, ptrl);
-            }
-            break;
-        }
-        if (p->next == NULL)
-            break;
-        p = p->next;
-        i++;
-    }
-*/
+
     int flag = 0;
     int i = 1;
     do {
@@ -164,6 +149,9 @@ Polynomial addRad(Polynomial ptrl, Radical b) {
         insertPoly( b , lenPoly(ptrl) , ptrl );
     }
     return ptrl;
+}
+Polynomial addRad(Polynomial a, Radical b){
+
 }
 //Raddivint()
 

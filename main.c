@@ -5,7 +5,7 @@
 
 int main(int argc , char * argv[]) {
 
-    Radical a[10] = {initRad(2,1,3) , initRad(-2,1,3), initRad(1,3,2), initRad(-1,-3,4)};
+    Radical a[10] = {initRad(2,1,3) , initRad(1,2,5), initRad(1,3,2), initRad(-1,-3,4)};
     //a[0] = initRad(2,1,3);
     //a[1] = initRad(3,1,3);
     Polynomial list = initPoly();
