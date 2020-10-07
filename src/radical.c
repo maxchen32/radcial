@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-//#include <string.h>
 #include "radical.h"
 #include "fraction.h"
 
@@ -40,7 +39,19 @@ Radical inttoRad( int radicand ){
 }
 void printPoly(Polynomial ptrl){
     Polynomial p = ptrl;
-    while(p != NULL){
+    if (p == NULL|| p->next == NULL){
+        return;
+    }
+    else{
+        p = p->next;
+    }
+    while(1){
+        printf("(%d/%d)*sqrt(%d)",p->num.out.up, p->num.out.down, p->num.in);
+        if (p->next == NULL){
+            break;
+        }
+        printf(" + ");
+        p = p->next;
     }
 }
 int isequalRad(Radical a, Radical b){
@@ -105,44 +116,67 @@ Radical mulRad(Radical a, Radical b){
 	res.out = mulFrac(a.out, res.out);
 	return res;
 }
-/*
-Polynomial addRad(Polynomial a, Radical b){
-	Polynomial front, rear;
-	rear = (Polynomial)malloc(sizeof(Node));
-	front = rear;
-	while (a != NULL){
-		if (a->num.in == b.in){
-			rear->num.out = addFrac(a->num.out, b.out);
-			rear->num.in = a->num.in;
-		} else {
-			rear = a;
-		}
-		a = a->next;
-		if (a != NULL){
-			rear->next = (Polynomial)malloc(sizeof(Node));
-			rear = rear->next;
-		}
-	}
-	rear->next = NULL;
-	return front;
-}*/
+
 Polynomial addRad(Polynomial ptrl, Radical b) {
     Polynomial p = ptrl;
+    if (p == NULL){
+        return NULL;
+    }
+    else if (p->next == NULL){
+        insertPoly( b ,1 , ptrl );
+        return ptrl;
+    }
+/*
+    p = p->next;
     int flag = 0;
-    while (p != NULL){
+    int i = 1;
+    while (1){
         if (p->num.in == b.in){
             p->num.out = addFrac(p->num.out, b.out);
-            flag = 1; break;
+            flag = 1;
+            if (p->num.out.up == 0){
+                deletePoly(i, ptrl);
+            }
+            break;
         }
+        if (p->next == NULL)
+            break;
+        p = p->next;
+        i++;
     }
+*/
+    int flag = 0;
+    int i = 1;
+    do {
+        p = p->next;
+        if (p->num.in == b.in){
+            p->num.out = addFrac(p->num.out, b.out);
+            flag = 1;
+            if (p->num.out.up == 0){
+                deletePoly(i, ptrl);
+            }
+            break;
+        }
+        i++;
+    }while (p->next != NULL);
+
     if (!flag) {
-        insertPoly( b , 1 , ptrl );
+        insertPoly( b , lenPoly(ptrl) , ptrl );
     }
     return ptrl;
 }
 //Raddivint()
 
 //list
+Polynomial initPoly(){
+    Polynomial head = (Polynomial)malloc(sizeof(Node));
+    if (head == NULL){
+        printf("initPoly: failed\n");
+        return NULL;
+    }
+    head->next = NULL;
+    return head;
+}
 int lenPoly(Polynomial ptrl){
 	Polynomial p = ptrl;
 	int j = 0;
@@ -155,12 +189,12 @@ int lenPoly(Polynomial ptrl){
 
 Polynomial findkthPloy(int k, Polynomial ptrl){
 	Polynomial p = ptrl;
-	int i = 1;
-	while ( p != NULL && i < k){
+	int i = 0;
+	while ( i < k && p != NULL ){
 		p = p->next;
 		i++;
 	}
-	if (i==k)
+	if ((i) == k)
 		return p;
 	else
 		return NULL;
@@ -176,15 +210,9 @@ Polynomial findPloy(Radical x, Polynomial ptrl){
 
 Polynomial insertPoly(Radical x,int i, Polynomial ptrl ){
     Polynomial p,s;
-    if (i == 1){
-        s = (Polynomial)malloc(sizeof(Node));
-        s->num = x;
-        s->next = ptrl;
-        return s;
-    }
     p = findkthPloy(i-1, ptrl);
     if (p == NULL){
-        fprintf(stderr, "insertPloy: type of i error\n");
+        fprintf(stderr, "insertPloy: value of i error\n");
         return NULL;
     }
     else {
@@ -198,16 +226,6 @@ Polynomial insertPoly(Radical x,int i, Polynomial ptrl ){
 
 Polynomial deletePoly(int i, Polynomial ptrl){
     Polynomial p,s;
-    if (i == 1){
-        s = ptrl;
-        if (ptrl != NULL)
-            ptrl = ptrl->next;
-        else
-            return NULL;
-        free(s);
-        s = NULL;
-        return ptrl;
-    }
     p = findkthPloy(i-1, ptrl);
     if (p == NULL){
         fprintf(stderr, "deletePoly: the %dth node does not exist\n",i-1);

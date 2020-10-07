@@ -6,6 +6,7 @@
 #define FractionN(up) initFrac(up, 1)
 #define Fraction(up, down) initFrac(up, down)
 #define EE initFrac(0, 0)
+#define iszeroFrac(a) ((a).up == 0 ? 1 : 0)
 //数学
 int gcd(int a, int b);						//最大公因数
 long long lgcd(long long a, long long b);
