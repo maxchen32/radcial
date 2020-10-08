@@ -3,25 +3,37 @@
 #include "radical.h"
 #include "fraction.h"
 
+void eyyc();
 int main(int argc , char * argv[]) {
-/*
-    Radical a[10] = {initRad(2,1,3) , initRad(1,2,5), initRad(1,3,2), initRad(-1,-3,4)};
-    //a[0] = initRad(2,1,3);
-    //a[1] = initRad(3,1,3);
-    Polynomial list = initPoly();
-    list = addRad(addRad(addRad(addRad(list, a[0]), a[1]), a[2]),a[3]);
-    //list = addRad(list, a[1]);
-
-    //list = insertPoly(a[0], 1, list);
-    printPoly(list);
-*/
-    int a[3];
-    scanf("%d%d%d",a[0],a[1],a[2]);
-    Polynomial list = initPoly();
-    
-    int delta = a[1] * a[1] - 4 * a[0] * a[2];
-    Radical nb = initRad(-delta, 1, 1);
-    list = addRad(addRad(list, nb), inttoRad(delta));
-    
+    eyyc();
     return 0;
+}
+
+void eyyc(){
+    int a[3];
+    scanf("%d%d%d",a, a+1, a+2);
+    Polynomial list = initPoly();
+    Polynomial list2 = initPoly();
+    int delta = a[1] * a[1] - 4 * a[0] * a[2];
+    if (delta >= 0){
+        Radical nb = initRad(-a[1], 1, 1);
+        list = addRad(addRad(list, nb), inttoRad(delta));
+        int da = 2 * a[0];
+        _PolyDivInt(list, &da);
+        printPoly(list);
+        printf("\n");
+        if (da != 1)
+            printf("%d\n",da);
+
+        da = 2 * a[0];
+        list2 = subRad(addRad(list2, nb), inttoRad(delta));
+        _PolyDivInt(list2, &da);
+        printPoly(list2);
+        printf("\n");
+        if (da != 1)
+            printf("%d\n",da);
+    }
+    else {
+        printf("delta = %d < 0\n",delta);
+    }
 }

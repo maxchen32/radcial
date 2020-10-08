@@ -18,7 +18,7 @@ void printRad(Radical a, char* end){
     printf("(%d/%d)*sqrt(%d)%s", a.out.up, a.out.down, a.in, end);
 }
 Radical inttoRad( int radicand ){
-    Radical res = {.out.up = 0, .out.down = 1, .in = 0};
+    Radical res = {.out.up = 0, .out.down = 1, .in = 1};
     if (0 == radicand) {
         return res;
     } else if (radicand < 0) {
@@ -48,13 +48,33 @@ void printPoly(Polynomial ptrl){
     else{
         p = p->next;
     }
+    if (p->num.out.up < 0)
+        printf("- ");
     while(1){
-        printf("(%d/%d)*sqrt(%d)",p->num.out.up, p->num.out.down, p->num.in);
+        if (p->num.in == 1){
+            if (p->num.out.down == 1)
+                printf("%d",(p->num.out.up > 0 ? p->num.out.up : -p->num.out.up));
+            else
+                printf("(%d/%d)", (p->num.out.up > 0 ? p->num.out.up : -p->num.out.up), p->num.out.down);
+        }
+        else{
+            if (p->num.out.down == 1){
+                if (p->num.out.up == 1 || p->num.out.up == -1)
+                    printf("sqrt(%d)", p->num.in);
+                else
+                    printf("%d*sqrt(%d)",(p->num.out.up > 0 ? p->num.out.up : -p->num.out.up), p->num.in);
+            }
+
+        }
+
         if (p->next == NULL){
             break;
         }
-        printf(" + ");
         p = p->next;
+        if (p->num.out.up >= 0)
+            printf(" + ");
+        else
+            printf(" - ");
     }
 }
 int isequalRad(Radical a, Radical b){
@@ -160,6 +180,9 @@ int gcdPoly(Polynomial ptrl){
         return 1;
     }
     p = p->next;
+    if (p->next == NULL){
+        return p->num.out.up;
+    }
     int gcdn = gcd(p->num.out.up, p->next->num.out.up);
     while (gcdn != 1){
         p = p->next;
@@ -169,6 +192,19 @@ int gcdPoly(Polynomial ptrl){
     }
 
     return gcdn >= 0 ? gcdn : -gcdn;
+}
+Polynomial _PolyDivInt(Polynomial ptrl, int* x){
+    Polynomial p = ptrl;
+    if (p == NULL || p->next == NULL){
+        return ptrl;
+    }
+    int gcdn = gcd(gcdPoly(ptrl), *x);
+    *x /= gcdn;
+    do {
+        p = p->next;
+        p->num.out.up /= gcdn;
+    }while (p->next != NULL);
+    return ptrl;
 }
 //Raddivint()
 

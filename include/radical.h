@@ -16,6 +16,7 @@ Radical mulRad(Radical a, Radical b);
 Polynomial addRad(Polynomial ptrl, Radical b);
 Polynomial subRad(Polynomial ptrl, Radical b);
 int gcdPoly(Polynomial ptrl);
+Polynomial _PolyDivInt(Polynomial ptrl, int* x);
 
 //list
 Polynomial initPoly();
