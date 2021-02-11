@@ -20,6 +20,7 @@ Polynomial _PolyIntReduce(Polynomial ptrl, int* x);
 
 //list
 Polynomial initPoly();
+void destoryPoly(Polynomial ptrl);
 int lenPoly(Polynomial ptrl);
 Polynomial findPloy(Radical x, Polynomial ptrl);
 Polynomial findkthPloy(int k, Polynomial ptrl);
