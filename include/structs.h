@@ -4,15 +4,15 @@
 typedef struct {
 	int up;
 	int down;
-} Fraction;
+} Fraction;                 //分数
 
 typedef struct {
 	Fraction out;
 	int in;
-} Radical;
+} Radical;                  //二次根式
 
 typedef struct Node Node;
-typedef Node* Polynomial;
+typedef Node* Polynomial;   //链表（算式）
 struct Node {
 	Radical num;
 	Polynomial next;

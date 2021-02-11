@@ -193,7 +193,7 @@ int gcdPoly(Polynomial ptrl){
 
     return gcdn >= 0 ? gcdn : -gcdn;
 }
-Polynomial _PolyDivInt(Polynomial ptrl, int* x){
+Polynomial _PolyIntReduce(Polynomial ptrl, int* x){
     Polynomial p = ptrl;
     if (p == NULL || p->next == NULL){
         return ptrl;
@@ -217,6 +217,12 @@ Polynomial initPoly(){
     }
     head->next = NULL;
     return head;
+}
+void destoryPoly(Polynomial ptrl){
+    if (ptrl == NULL) {
+        printf("destoryPoly: failed\n");
+    }
+    free(ptrl);
 }
 int lenPoly(Polynomial ptrl){
     Polynomial p = ptrl;
