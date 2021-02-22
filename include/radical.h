@@ -1,14 +1,15 @@
 #ifndef _RADICAL_H
 #define _RADICAL_H
 #include "structs.h"
+#include <stdbool.h>
 
 //tool
 Radical initRad(int up, int down, int in);
 void printRad(Radical a, char* end);
-Radical inttoRad( int radicand );
+Radical Radsqrt( int radicand );
 void printPoly(Polynomial ptrl);
 int cmpRad(Radical a, Radical b);
-int isequalRad(Radical a, Radical b);
+bool isequalRad(Radical a, Radical b);
 
 //calculation
 Radical divRad(Radical a, Radical b);
@@ -22,8 +23,8 @@ Polynomial _PolyIntReduce(Polynomial ptrl, int* x);
 Polynomial initPoly();
 void destoryPoly(Polynomial ptrl);
 int lenPoly(Polynomial ptrl);
-Polynomial findPloy(Radical x, Polynomial ptrl);
-Polynomial findkthPloy(int k, Polynomial ptrl);
+Polynomial findPoly(Radical x, Polynomial ptrl);
+Polynomial findkthPoly(int k, Polynomial ptrl);
 Polynomial insertPoly(Radical x,int i, Polynomial ptrl );
 Polynomial deletePoly(int i, Polynomial ptrl);
 

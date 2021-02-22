@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "radical.h"
 #include "fraction.h"
 
@@ -10,19 +11,19 @@ Radical initRad(int up, int down, int in){
     if (down != 0){
         reduceFrac(&(tmp.out));
     }
-    Radical res = inttoRad( tmp.in );
+    Radical res = Radsqrt( tmp.in );
     res.out = mulFrac(res.out, tmp.out);
     return res;
 }
 void printRad(Radical a, char* end){
     printf("(%d/%d)*sqrt(%d)%s", a.out.up, a.out.down, a.in, end);
 }
-Radical inttoRad( int radicand ){
+Radical Radsqrt( int radicand ){
     Radical res = {.out.up = 0, .out.down = 1, .in = 1};
     if (0 == radicand) {
         return res;
     } else if (radicand < 0) {
-        printf("Error: negative number, exiting\n");
+        fprintf(stderr, "Radsqrt: negative number, exiting\n");
         exit(1);
     }
     int flag = 0;
@@ -48,23 +49,25 @@ void printPoly(Polynomial ptrl){
     else{
         p = p->next;
     }
+
     if (p->num.out.up < 0)
         printf("- ");
     while(1){
         if (p->num.in == 1){
             if (p->num.out.down == 1)
-                printf("%d",(p->num.out.up > 0 ? p->num.out.up : -p->num.out.up));
+                printf("%d",abs(p->num.out.up));
             else
-                printf("(%d/%d)", (p->num.out.up > 0 ? p->num.out.up : -p->num.out.up), p->num.out.down);
+                printf("(%d/%d)", abs(p->num.out.up), p->num.out.down);
         }
         else{
             if (p->num.out.down == 1){
                 if (p->num.out.up == 1 || p->num.out.up == -1)
                     printf("sqrt(%d)", p->num.in);
                 else
-                    printf("%d*sqrt(%d)",(p->num.out.up > 0 ? p->num.out.up : -p->num.out.up), p->num.in);
+                    printf("%d*sqrt(%d)", abs(p->num.out.up), p->num.in);
             }
-
+            else
+                printf("(%d/%d)*sqrt(%d)", abs(p->num.out.up), p->num.out.down, p->num.in);
         }
 
         if (p->next == NULL){
@@ -77,11 +80,11 @@ void printPoly(Polynomial ptrl){
             printf(" - ");
     }
 }
-int isequalRad(Radical a, Radical b){
+bool isequalRad(Radical a, Radical b){
     if (a.in == b.in && a.out.up == b.out.up && a.out.down == b.out.down)
-        return 1;
+        return true;
     else
-        return 0;
+        return false;
 }
 /*
 int cmpRad(Radical a, Radical b){
@@ -135,7 +138,7 @@ Radical mulRad(Radical a, Radical b){
     Radical res;
     a.out = mulFrac(a.out, b.out);
     a.in *= b.in;
-    res = inttoRad(a.in);
+    res = Radsqrt(a.in);
     res.out = mulFrac(a.out, res.out);
     return res;
 }
@@ -234,7 +237,7 @@ int lenPoly(Polynomial ptrl){
     return j;
 }
 
-Polynomial findkthPloy(int k, Polynomial ptrl){
+Polynomial findkthPoly(int k, Polynomial ptrl){
     Polynomial p = ptrl;
     int i = 0;
     while ( i < k && p != NULL ){
@@ -247,7 +250,7 @@ Polynomial findkthPloy(int k, Polynomial ptrl){
         return NULL;
 }
 
-Polynomial findPloy(Radical x, Polynomial ptrl){
+Polynomial findPoly(Radical x, Polynomial ptrl){
     Polynomial p = ptrl;
     while (p != NULL && isequalRad(p->num, x)){
         p = p->next;
@@ -257,7 +260,7 @@ Polynomial findPloy(Radical x, Polynomial ptrl){
 
 Polynomial insertPoly(Radical x,int i, Polynomial ptrl ){
     Polynomial p,s;
-    p = findkthPloy(i-1, ptrl);
+    p = findkthPoly(i-1, ptrl);
     if (p == NULL){
         fprintf(stderr, "insertPloy: value of i error\n");
         return NULL;
@@ -273,7 +276,7 @@ Polynomial insertPoly(Radical x,int i, Polynomial ptrl ){
 
 Polynomial deletePoly(int i, Polynomial ptrl){
     Polynomial p,s;
-    p = findkthPloy(i-1, ptrl);
+    p = findkthPoly(i-1, ptrl);
     if (p == NULL){
         fprintf(stderr, "deletePoly: the %dth node does not exist\n",i-1);
         return NULL;

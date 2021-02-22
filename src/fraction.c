@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <stdbool.h>
 #include "fraction.h"
 #include "radical.h"
 
@@ -100,13 +101,8 @@ int cmpFrac(Fraction a, Fraction b){
     else if (resup > resdown)
         return 1;
 }
-int humanerr(Fraction a){
-    if (a.down == 0){
-        return 1;
-    }
-    else{
-        return 0;
-    }
+bool isDownZero(Fraction a){
+    return a.down == 0 ? true : false;
 }
 Fraction c(char myope, ...){
     va_list alist;
@@ -116,25 +112,25 @@ Fraction c(char myope, ...){
     argval = va_arg(alist, Fraction);
     switch (myope){
     case '+' :
-        while (!humanerr(argval)){
+        while (!isDownZero(argval)){
             res = addFrac(res, argval);
             argval = va_arg(alist, Fraction);
         }
         break;
     case '-' :
-        while (!humanerr(argval)){
+        while (!isDownZero(argval)){
             res = subFrac(res, argval);
             argval = va_arg(alist, Fraction);
         }
         break;
     case '*' :
-        while (!humanerr(argval)){
+        while (!isDownZero(argval)){
             res = mulFrac(res, argval);
             argval = va_arg(alist, Fraction);
         }
         break;
     case '/' :
-        while (!humanerr(argval)){
+        while (!isDownZero(argval)){
             res = divFrac(res, argval);
             argval = va_arg(alist, Fraction);
         }
@@ -181,7 +177,7 @@ Fraction powFrac(Fraction a, int expt){
 	return a;
 }
 Radical sqrtFrac(Fraction a){
-	Radical u = inttoRad(a.up) , d = inttoRad(a.down);
+	Radical u = Radsqrt(a.up) , d = Radsqrt(a.down);
 	Fraction tmp = divFrac(u.out, d.out);
 	u.in *= d.in;
 	d.out.down = d.in;

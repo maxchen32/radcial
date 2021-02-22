@@ -1,0 +1,14 @@
+#include <stdio.h>
+#include <math.h>
+#include "fraction.h"
+#include "radical.h"
+
+int main(){
+	Polynomial p = initPoly();
+	p = addRad(p, initRad(1, 1, 2));
+	p = addRad(p, initRad(1, 2, 3));
+	p = addRad(p, initRad(2, 1, 5));
+	p = addRad(p, initRad(6, 1, 6));
+	printPoly(p);
+	return 0;
+}
