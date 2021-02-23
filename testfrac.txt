@@ -1,1 +1,0 @@
-gcc -o testfrac.exe src/fraction.c main.c -I include
