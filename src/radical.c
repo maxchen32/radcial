@@ -209,7 +209,7 @@ Polynomial _PolyIntReduce(Polynomial ptrl, int* x){
     }while (p->next != NULL);
     return ptrl;
 }
-//Raddivint()
+//TODO Raddivint()
 
 //list
 Polynomial initPoly(){
@@ -221,11 +221,18 @@ Polynomial initPoly(){
     head->next = NULL;
     return head;
 }
-void destoryPoly(Polynomial ptrl){
+void destoryPoly(Polynomial* ptrl){
     if (ptrl == NULL) {
         printf("destoryPoly: failed\n");
     }
-    free(ptrl);
+    Polynomial p = *ptrl;
+    Polynomial q; 
+    while (p){
+   	q = p->next;
+        free(p);	
+	p = q;
+    }
+    *ptrl = NULL;
 }
 int lenPoly(Polynomial ptrl){
     Polynomial p = ptrl;

@@ -21,7 +21,7 @@ Polynomial _PolyIntReduce(Polynomial ptrl, int* x);
 
 //list
 Polynomial initPoly();
-void destoryPoly(Polynomial ptrl);
+void destoryPoly(Polynomial* ptrl);
 int lenPoly(Polynomial ptrl);
 Polynomial findPoly(Radical x, Polynomial ptrl);
 Polynomial findkthPoly(int k, Polynomial ptrl);
