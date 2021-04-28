@@ -241,7 +241,7 @@ int lenPoly(Polynomial ptrl){
         p = p->next;
         j++;
     }
-    return j;
+    return j-1;
 }
 
 Polynomial findkthPoly(int k, Polynomial ptrl){
