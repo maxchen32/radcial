@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <stdbool.h>
-#include "fraction.h"
-#include "radical.h"
+#include "radical/fraction.h"
 
 #define serious_error {\
 	printf("Serious error: Maybe 0(zero) appered in denominators.");\
@@ -80,7 +79,12 @@ void reduce(int* a, int* b){
     *b /= gcdn;
 }
 void printFrac(Fraction a, char* end){
-	printf("(%d/%d)%s", a.up, a.down, end);
+	//printf("(%d/%d)%s", a.up, a.down, end);
+	printf("(%d", a.up);
+	if (a.down != 1) {
+		printf("/%d", a.down);
+	}
+	printf(")%s", end);
 }
 int cmpFrac(Fraction a, Fraction b){
     if (b.down == 0){
@@ -176,12 +180,4 @@ Fraction powFrac(Fraction a, int expt){
 	a.down = qpow(a.down, expt);
 	return a;
 }
-Radical sqrtFrac(Fraction a){
-	Radical u = Radsqrt(a.up) , d = Radsqrt(a.down);
-	Fraction tmp = divFrac(u.out, d.out);
-	u.in *= d.in;
-	d.out.down = d.in;
-	d.out.up = 1;
-	u.out = mulFrac(tmp, d.out);
-	return u;
-}
+

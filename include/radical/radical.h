@@ -1,12 +1,26 @@
 #ifndef _RADICAL_H
 #define _RADICAL_H
-#include "structs.h"
+#include "fraction.h"
 #include <stdbool.h>
+
+typedef struct {
+	Fraction out;
+	int in;
+} Radical;                  //二次根式
+
+typedef struct Node Node;
+typedef Node* Polynomial;   //链表（算式）
+struct Node {
+	Radical num;
+	Polynomial next;
+};
+
 
 //tool
 Radical initRad(int up, int down, int in);
 void printRad(Radical a, char* end);
 Radical Radsqrt( int radicand );
+Radical  sqrtFrac(Fraction a);               //分数开方
 void printPoly(Polynomial ptrl);
 int cmpRad(Radical a, Radical b);
 bool isequalRad(Radical a, Radical b);

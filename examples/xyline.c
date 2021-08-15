@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
-#include "fraction.h"
-#include "radical.h"
+#include "radical/fraction.h"
+#include "radical/radical.h"
 
 typedef enum {
 	OK,
@@ -26,8 +26,8 @@ Status xyline(Fraction* res, Fraction a, Fraction b, Fraction m,
 }
 int main(){
 	Fraction result[2];
-	Status sta = xyline(result, initFrac(1,1), initFrac(1,1), initFrac(10,1), 
-	  initFrac(64,56), initFrac(1,1), initFrac(52,5));
+	Status sta = xyline(result, initFrac(10,1), initFrac(6,1), initFrac(51,1), 
+	  initFrac(-8,1), initFrac(12,1), initFrac(18,1));
 	if (sta == OK) {
 		printFrac(result[0], "\n");
 		printFrac(result[1], "\n");

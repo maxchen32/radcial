@@ -1,12 +1,17 @@
 #ifndef _FRACTION_H
 #define _FRACTION_H
 
-#include "structs.h"
 #define Fraction0() initFrac(0, 1)
 #define FractionN(up) initFrac(up, 1)
 #define Fraction(up, down) initFrac(up, down)
 #define EE initFrac(0, 0)
 #define iszeroFrac(a) ((a).up == 0 ? 1 : 0)
+
+typedef struct {
+	int up;
+	int down;
+} Fraction;                 //分数
+
 //数学
 int       gcd(int a, int b);						//最大公因数
 long long lgcd(long long a, long long b);
@@ -28,7 +33,6 @@ Fraction subFrac(Fraction a, Fraction b);	//减法
 Fraction mulFrac(Fraction a, Fraction b);	//乘法
 Fraction divFrac(Fraction a, Fraction b);	//除法
 Fraction powFrac(Fraction a, int expt);		//乘方
-Radical  sqrtFrac(Fraction a);               //开方
 
 #endif
 

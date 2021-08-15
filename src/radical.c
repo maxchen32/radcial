@@ -2,8 +2,8 @@
 #include <math.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "radical.h"
-#include "fraction.h"
+#include "radical/radical.h"
+#include "radical/fraction.h"
 
 //tool
 Radical initRad(int up, int down, int in){
@@ -40,6 +40,15 @@ Radical Radsqrt( int radicand ){
         res.in  = radicand;
     }
     return res;
+}
+Radical sqrtFrac(Fraction a){
+	Radical u = Radsqrt(a.up) , d = Radsqrt(a.down);
+	Fraction tmp = divFrac(u.out, d.out);
+	u.in *= d.in;
+	d.out.down = d.in;
+	d.out.up = 1;
+	u.out = mulFrac(tmp, d.out);
+	return u;
 }
 void printPoly(Polynomial ptrl){
     Polynomial p = ptrl;
@@ -224,6 +233,7 @@ Polynomial initPoly(){
 void destoryPoly(Polynomial* ptrl){
     if (ptrl == NULL) {
         printf("destoryPoly: failed\n");
+		return;
     }
     Polynomial p = *ptrl;
     Polynomial q; 
