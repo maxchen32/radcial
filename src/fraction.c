@@ -5,7 +5,7 @@
 #include "radical/fraction.h"
 
 #define serious_error {\
-	printf("Serious error: Maybe 0(zero) appered in denominators.");\
+	fprintf(stderr, "Serious error: Maybe 0(zero) appered in denominators.");\
 	exit(1);\
 }
 
