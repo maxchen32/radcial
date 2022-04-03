@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <math.h>
-#include "radical/fraction.h"
-#include "radical/radical.h"
+#include "radical.h"
 
 typedef enum {
 	OK,

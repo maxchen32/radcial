@@ -18,7 +18,7 @@ struct Node {
 
 //tool
 Radical initRad(int up, int down, int in);
-void printRad(Radical a, char* end);
+void printRad(Radical a);
 Radical Radsqrt( int radicand );
 Radical  sqrtFrac(Fraction a);               //分数开方
 void printPoly(Polynomial ptrl);

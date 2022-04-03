@@ -2,8 +2,13 @@
 #include <math.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "radical/radical.h"
-#include "radical/fraction.h"
+#include "radical.h"
+#include "fraction.h"
+#include "gc.h"
+
+#define malloc(n)   GC_malloc(n)
+#define calloc(m,n) GC_malloc((m)*(n))
+#define free(n)     GC_free(n)
 
 //tool
 Radical initRad(int up, int down, int in){
@@ -15,8 +20,57 @@ Radical initRad(int up, int down, int in){
     res.out = mulFrac(res.out, tmp.out);
     return res;
 }
-void printRad(Radical a, char* end){
-    printf("(%d/%d)*sqrt(%d)%s", a.out.up, a.out.down, a.in, end);
+void printRad(Radical a){
+    int len_up   = _len_abs(a.out.up);
+    int len_in   = _len_abs(a.in);
+    if (a.out.down != 1) {
+        int len_down = _len_abs(a.out.down);
+        int len_max  = MAX(len_up, len_down);
+        int len_min  = MIN(len_up, len_down);        
+        
+        bool sym = 0;   // >0
+        if (a.out.up<0) { 
+            sym = 1;    // <0
+            putchar(' ');
+        }
+        printf("%d\n", abs(a.out.up));
+            
+        if (sym)
+            putchar('-');
+        for (int i = 0; i < len_max; i++)
+            putchar('_');
+        putchar(' ');
+        for (int i = 0; i < len_in; i++)
+            putchar('_');
+        putchar('\n');
+
+        int len_down_right = (len_max - len_min) / 2;
+        int len_down_left  = len_max - len_min - len_down_right;
+        if (sym)
+            putchar(' ');
+        for (int i = 0; i < len_down_left; i++)
+            putchar(' ');
+        printf("%d", a.out.down);
+        for (int i = 0; i < len_down_right; i++)
+            putchar(' ');
+    } else if (a.out.up != 1){
+        printf("%d\n", a.out.up);
+        for (int i = 0; i < len_up; i++)
+            putchar(' ');
+        putchar(' ');
+        for (int i = 0; i < len_in; i++)
+            putchar('_');
+        putchar('\n');
+        for (int i = 0; i < len_up; i++)
+            putchar(' ');
+    } else {
+        putchar('\n');
+        putchar(' ');
+        for (int i = 0; i < len_in; i++)
+            putchar('_');
+        putchar('\n');
+    }
+    printf("\u221a%d", a.in);
 }
 Radical Radsqrt( int radicand ){
     Radical res = {.out.up = 0, .out.down = 1, .in = 1};
@@ -41,7 +95,7 @@ Radical Radsqrt( int radicand ){
     }
     return res;
 }
-Radical sqrtFrac(Fraction a){
+Radical sqrtFrac(Fraction a) {
 	Radical u = Radsqrt(a.up) , d = Radsqrt(a.down);
 	Fraction tmp = divFrac(u.out, d.out);
 	u.in *= d.in;
@@ -71,12 +125,12 @@ void printPoly(Polynomial ptrl){
         else{
             if (p->num.out.down == 1){
                 if (p->num.out.up == 1 || p->num.out.up == -1)
-                    printf("sqrt(%d)", p->num.in);
+                    printf("¡Ì(%d)", p->num.in);
                 else
-                    printf("%d*sqrt(%d)", abs(p->num.out.up), p->num.in);
+                    printf("%d¡Ì(%d)", abs(p->num.out.up), p->num.in);
             }
             else
-                printf("(%d/%d)*sqrt(%d)", abs(p->num.out.up), p->num.out.down, p->num.in);
+                printf("(%d/%d)¡Ì(%d)", abs(p->num.out.up), p->num.out.down, p->num.in);
         }
 
         if (p->next == NULL){
@@ -257,7 +311,7 @@ int lenPoly(Polynomial ptrl){
 Polynomial findkthPoly(int k, Polynomial ptrl){
     Polynomial p = ptrl;
     int i = 0;
-    while ( i < k && p != NULL ){
+    while ( i < k && p != NULL && p->next != NULL){
         p = p->next;
         i++;
     }

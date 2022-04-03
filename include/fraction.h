@@ -1,6 +1,20 @@
 #ifndef _FRACTION_H
 #define _FRACTION_H
 
+#define MAX(x, y)  ({\
+typeof(x) _x = x;\
+typeof(y) _y = y;\
+(void)(&_x == &_y);\
+_x > _y ? _x : _y;\
+})
+
+#define MIN(x, y)  ({\
+typeof(x) _x = x;\
+typeof(y) _y = y;\
+(void)(&_x == &_y);\
+_x < _y ? _x : _y;\
+})
+
 #define Fraction0() initFrac(0, 1)
 #define FractionN(up) initFrac(up, 1)
 #define Fraction(up, down) initFrac(up, down)
@@ -23,7 +37,9 @@ Fraction initFrac(int up ,int down);       //初始化
 void     fixsignFrac(Fraction* a);				//符号修正、错误处理
 void     reduceFrac(Fraction* a);				//分数约分
 void     reduce(int* a, int* b);              //数约分
-void     printFrac(Fraction a, char* end);    //打印
+void     printFrac(Fraction a);    //打印
+int      _len_abs(int n);
+void     pprintFrac(Fraction a);   //（实验性的）美观打印
 int      cmpFrac(Fraction a, Fraction b);       //比较 返回-1 , 0 , 1
 Fraction c(char myope, ...);               //运算器
 

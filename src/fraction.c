@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <stdbool.h>
-#include "radical/fraction.h"
+#include "fraction.h"
 
-#define serious_error {\
-	fprintf(stderr, "Serious error: Maybe 0(zero) appered in denominators.");\
-	exit(1);\
+#define SERIOUS_ERROR {\
+	fprintf(stderr, "Fatal error: Maybe 0(zero) appered in denominators.\n");\
+	exit(EDOM);\
 }
 
 //math
@@ -55,7 +55,7 @@ Fraction initFrac(int up, int down){
 }
 void fixsignFrac(Fraction* a){
 	if (0 == a->down){
-		serious_error;
+		SERIOUS_ERROR;
 	}
 	if (0 == a->up){
 		a->down = 1;
@@ -78,13 +78,54 @@ void reduce(int* a, int* b){
     *a /= gcdn;
     *b /= gcdn;
 }
-void printFrac(Fraction a, char* end){
+void printFrac(Fraction a){
 	//printf("(%d/%d)%s", a.up, a.down, end);
 	printf("(%d", a.up);
 	if (a.down != 1) {
 		printf("/%d", a.down);
 	}
-	printf(")%s", end);
+	printf(")");
+}
+int _len_abs(int n) {
+    /* int len = n <= 0 ? 1 : 0; */
+    int len = 0;
+    do {
+        n /= 10;
+        len++;
+    } while (n);
+    return len;
+}
+void pprintFrac(Fraction a) {
+    if (a.down == 1) {
+        printf("%d", a.up);
+        return;
+    }
+    int len_up   = _len_abs(a.up);
+    int len_down = _len_abs(a.down);
+    int len_max  = MAX(len_up, len_down);
+    int len_min  = MIN(len_up, len_down);
+    
+    bool sym = 0;   // >0
+    if (a.up<0) { 
+        sym = 1;    // <0
+        putchar(' ');
+    }
+    printf("%d\n", abs(a.up));
+    if (sym)
+        putchar('-');
+    for (int i = 0; i < len_max; i++)
+        putchar('_');
+    putchar('\n');
+        
+    int len_down_right = (len_max - len_min) / 2;
+    int len_down_left  = len_max - len_min - len_down_right;
+    if (sym)
+        putchar(' ');
+    for (int i = 0; i < len_down_left; i++)
+        putchar(' ');
+    printf("%d", a.down);
+    for (int i = 0; i < len_down_right; i++)
+        putchar(' ');
 }
 int cmpFrac(Fraction a, Fraction b){
     if (b.down == 0){

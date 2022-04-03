@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "radical/radical.h"
+#include "radical.h"
 
 void eyyc(int a, int b, int c);
 int main(int argc, char * argv[]) {
