@@ -61,6 +61,7 @@ dkms.conf
 
 obj/
 bin/
+lib/
 push.py
 data.txt
 *.sh
