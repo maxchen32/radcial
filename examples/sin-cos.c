@@ -4,7 +4,7 @@
 #include "radical.h"
 
 int main() {
-    puts("         _");
+    puts("          _");
     puts("输入a/b*√c中的三个参数：");
     fflush(stdout);
     int a, b, c;

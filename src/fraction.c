@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <stdbool.h>
+#include <errno.h>
 #include "fraction.h"
 
 #define SERIOUS_ERROR {\
