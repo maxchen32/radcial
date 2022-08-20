@@ -28,8 +28,8 @@ int main(){
 	Status sta = xyline(result, initFrac(10,1), initFrac(6,1), initFrac(51,1), 
 	  initFrac(-8,1), initFrac(12,1), initFrac(18,1));
 	if (sta == OK) {
-		printFrac(result[0], "\n");
-		printFrac(result[1], "\n");
+		printFrac(result[0]);
+		printFrac(result[1]);
 	} else if (sta == NOROOT) {
 		printf("No Root\n");
 	} else {
