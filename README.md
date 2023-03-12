@@ -1,5 +1,7 @@
 # radical
 
+## Ready to Archive , Check <https://codeberg.org/maxchen32/radicalite> for updates
+
 不适合用于生产（代码质量感人）  
 Not suitable for production use.
 
